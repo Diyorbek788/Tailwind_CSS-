@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+  <a href="{% url 'teacher_create' %}" class="block w-full text-center px-6 py-3 mb-5 border border-green-500 rounded-md text-green-500 hover:bg-green-500 hover:text-white">
+    Yangi o'qituvchi
+  </a>
+
+  <ul class="divide-y divide-gray-200">
+    {% for teacher in teachers %}
+    <li class="py-4 flex items-center justify-between">
+      <a href="{% url 'teacher_students' id=teacher.id %}" class="hover:underline text-lg font-medium">
+        {{ teacher }}
+      </a>
+      <div class="flex items-center gap-3">
+        <a href="{% url 'teacher_update' id=teacher.id %}" class="inline-flex items-center px-4 py-2 border border-yellow-500 rounded-md text-yellow-500 hover:bg-yellow-500 hover:text-white text-sm">
+          Tahrirlash
+        </a>
+        {% if teacher.student_set.all %}
+        <button disabled class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-500 bg-gray-200 cursor-not-allowed text-sm">
+          O'chirish
+        </button>
+        {% else %}
+        <a href="{% url 'teacher_delete' id=teacher.id %}" class="inline-flex items-center px-4 py-2 border border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white text-sm">
+          O'chirish
+        </a>
+        {% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock content %}
